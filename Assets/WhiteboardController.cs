@@ -27,6 +27,7 @@ public class WhiteboardController : MonoBehaviour,
     private bool drawingInProgress = false;
 
     //Connecting the rectangles
+    public float rect_dist = 10;
     private Vector2 prevPoint1;
     private Vector2 prevPoint2;
     private Vector2 prevPoint3;
@@ -49,7 +50,7 @@ public class WhiteboardController : MonoBehaviour,
             }
         }
 
-        //drawTriangle(new Vector2(5, 5), new Vector2(0, 10), new Vector2(1, 0));
+        //drawTriangle(new Vector2(20, 20), new Vector2(0, 10), new Vector2(1, 0));
         //drawTriangle(new Vector2(5, 5), new Vector2(1, 2), new Vector2(1, 9));
 
 
@@ -131,18 +132,20 @@ public class WhiteboardController : MonoBehaviour,
             drawTriangle(pointE, pointB, pointC);
             drawTriangle(pointC, pointE, pointD);
 
-            
             //storing points to draw connection between rectangles
-            if(prevPoint1 != null && prevPoint2 != null && prevPoint3 != null && counter > 1)
+            if (Vector2.Distance(prevPoint1, pointC) < rect_dist || Vector2.Distance(prevPoint3, pointB) < rect_dist)
             {
-                drawTriangle(prevPoint1, prevPoint2, pointC);
-                drawTriangle(prevPoint3, prevPoint2, pointB);
-            }
+                if (prevPoint1 != null && prevPoint2 != null && prevPoint3 != null && counter > 1)
+                {
+                    drawTriangle(prevPoint1, prevPoint2, pointC);
+                    drawTriangle(prevPoint3, prevPoint2, pointB);
+                }
 
-            prevPoint1 = pointD;
-            prevPoint2 = lastPoint;
-            prevPoint3 = pointE;
-            counter++;
+                prevPoint1 = pointD;
+                prevPoint2 = lastPoint;
+                prevPoint3 = pointE;
+                counter++;
+            }
 
             //linear function implementation
             //float slope = (point.y - lastPoint.y) / (point.x - lastPoint.x);
