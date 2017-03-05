@@ -11,7 +11,7 @@ using System;
 public class WhiteboardController : MonoBehaviour,
                                     IPointerEnterHandler,
                                     IPointerExitHandler,
-                                    IGvrPointerHoverHandler
+                                    IPointerClickHandler
 {
     public Color markerColor;
     public float markerWidthInPixels = 3f;
@@ -137,13 +137,18 @@ public class WhiteboardController : MonoBehaviour,
             {
                 if (prevPoint1 != null && prevPoint2 != null && prevPoint3 != null && counter > 1)
                 {
-                    drawTriangle(prevPoint1, prevPoint2, pointC);
-                    drawTriangle(prevPoint3, prevPoint2, pointB);
+					drawTriangle(prevPoint1, prevPoint2, pointD);
+                    //drawTriangle(prevPoint1, prevPoint2, pointC);
+					drawTriangle(prevPoint3, prevPoint2, pointE);
+                    //drawTriangle(prevPoint3, prevPoint2, pointB);
                 }
 
-                prevPoint1 = pointD;
-                prevPoint2 = lastPoint;
-                prevPoint3 = pointE;
+				prevPoint1 = pointC;
+                //prevPoint1 = pointD;
+				prevPoint2 = point;
+                //prevPoint2 = lastPoint;
+				prevPoint3 = pointB;
+                //prevPoint3 = pointE;
                 counter++;
             }
 
@@ -323,7 +328,7 @@ public class WhiteboardController : MonoBehaviour,
     }
 
 
-    public void OnGvrPointerHover(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("Pointer hover.");
         if (GvrController.IsTouching)
