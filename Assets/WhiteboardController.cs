@@ -26,6 +26,12 @@ public class WhiteboardController : MonoBehaviour,
     private Vector2 lastPoint;
     private bool drawingInProgress = false;
 
+    //Connecting the rectangles
+    private Vector2 prevPoint1;
+    private Vector2 prevPoint2;
+    private Vector2 prevPoint3;
+    private int counter = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -43,7 +49,7 @@ public class WhiteboardController : MonoBehaviour,
             }
         }
 
-        drawTriangle(new Vector2(5, 5), new Vector2(0, 10), new Vector2(1, 0));
+        //drawTriangle(new Vector2(5, 5), new Vector2(0, 10), new Vector2(1, 0));
         //drawTriangle(new Vector2(5, 5), new Vector2(1, 2), new Vector2(1, 9));
 
         drawingSurface.Apply();
@@ -119,9 +125,23 @@ public class WhiteboardController : MonoBehaviour,
             //only drawing triangles
             //drawTriangle(lastPoint, pointB, pointC);
             //generateLine(lastPoint, point);
+
             //drawing rectangles
             drawTriangle(pointE, pointB, pointC);
             drawTriangle(pointC, pointE, pointD);
+
+
+            //storing points to draw connection between rectangles
+            if(prevPoint1 != null && prevPoint2 != null && prevPoint3 != null && counter > 1)
+            {
+                drawTriangle(prevPoint1, prevPoint2, pointC);
+                drawTriangle(prevPoint3, prevPoint2, pointB);
+            }
+
+            prevPoint1 = pointD;
+            prevPoint2 = lastPoint;
+            prevPoint3 = pointE;
+            
 
             //linear function implementation
             //float slope = (point.y - lastPoint.y) / (point.x - lastPoint.x);
